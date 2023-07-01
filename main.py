@@ -3,15 +3,15 @@ import csv
 import os
 import datetime
 import re
+import sys
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from validate_email_address import validate_email
 import requests
-
-def main():
+def intro():
     print(
-        "Welcome to MyBank\n\nYour App for Empowering you Financial Freedom\n Your Money, Your Way\n"
+        "Welcome to MyBank\n\nYour App for Empowering you Financial Freedom\nYour Money, Your Way!!!\nThe ultimate financial application that revolutionizes how you manage your daily finances. \nTake control of your money like never before with our intuitive and user-friendly interface. \nTrack your expenses, apply for loans, and gain valuable insights into international exchange rates."
     )
 
 
@@ -39,9 +39,8 @@ def welcome_page():
         print("Invalid choice, try again")
         return user_choice
 
-
 def my_profile():
-    print("Please Enter your data to create a profile with us")
+    print("Please enter your data to create a profile with us")
     customer_id = random.randint(100000, 999999)
 
     while True:
@@ -52,7 +51,6 @@ def my_profile():
         elif customer_title == "stop":
             print("Exiting registration process...")
             return welcome_page()
-
         else:
             print("Invalid customer title. Please try again with Mrs or Mr.")
             continue
@@ -65,9 +63,7 @@ def my_profile():
             print("Exiting registration process...")
             return welcome_page()
         else:
-            print(
-                "Invalid name. Please try again without any digits or special characters."
-            )
+            print("Invalid name. Please try again without any digits or special characters.")
             continue
 
     while True:
@@ -78,9 +74,7 @@ def my_profile():
             print("Exiting registration process...")
             return welcome_page()
         else:
-            print(
-                "Invalid name. Please try again without any digits or special characters."
-            )
+            print("Invalid name. Please try again without any digits or special characters.")
             continue
 
     while True:
@@ -91,9 +85,7 @@ def my_profile():
             print("Exiting registration process...")
             return welcome_page()
         else:
-            print(
-                "Invalid input. Please try again without any digits or special characters."
-            )
+            print("Invalid input. Please try again without any digits or special characters.")
             continue
 
     while True:
@@ -140,43 +132,26 @@ def my_profile():
             print("Exiting registration process...")
             return welcome_page()
         else:
-            print(
-                "Invalid Country name. Please try again without any special characters."
-            )
+            print("Invalid Country name. Please try again without any special characters.")
             continue
 
     while True:
         try:
-            customer_agreement = input(
-                "Do you agree to processing your data by MyBank as per international financial regulations (yes/no): "
-            ).lower()
+            customer_agreement = input("Do you agree to processing your data by MyBank as per international financial regulations (yes/no): ").lower()
 
             if customer_agreement == "yes" or customer_agreement == "y":
-                print(
-                    "Welcome to My Bank",
-                    customer_title,
-                    customer_last_name,
-                    "\nYour user ID is",
-                    customer_id,
-                    "\n Saving your details...\nDiscover our wide range of banking services",
-                )
-                return welcome_page()
+                print("Welcome to My Bank", customer_title, customer_last_name, "\nYour user ID is", customer_id, "\nSaving your details...\nDiscover our wide range of banking services")
+                break
             elif customer_agreement == "no" or customer_agreement == "n":
-                print(
-                    "Unfortunately",
-                    customer_title,
-                    customer_last_name,
-                    "we cannot offer you our services without your consent to processing your data.",
-                )
-                exit_choice = input(
-                    "Please type 'exit' to abandon the process or 'yes' to agree to our Terms and Conditions: "
-                ).lower()
+                print("Unfortunately", customer_title, customer_last_name, "we cannot offer you our services without your consent to processing your data.")
+                exit_choice = input("Please type 'exit' to abandon the process or 'yes' to agree to our Terms and Conditions: ").lower()
 
                 if exit_choice == "yes" or exit_choice == "y":
-                    return welcome_page()
+                    print("Welcome to My Bank", customer_title, customer_last_name, "\nYour user ID is", customer_id, "\nSaving your details...\nDiscover our wide range of banking services")
+                    break
                 elif exit_choice == "exit":
                     print("Sad to see you go", customer_title, customer_last_name)
-                    break
+                    sys.exit()
                 else:
                     print("Invalid Choice. Kindly enter 'yes' or 'exit'.")
             else:
@@ -187,106 +162,124 @@ def my_profile():
     if not os.path.isfile("customerdata.csv"):
         with open("customerdata.csv", "w") as file:
             writer = csv.writer(file)
-            writer.writerow(
-                [
-                    "customer_id",
-                    "customer_title",
-                    "customer_first_name",
-                    "customer_last_name",
-                    "customer_dob",
-                    "customer_address",
-                    "customer_nationality",
-                    "customer_email",
-                    "customer_phone",
-                ]
-            )
+            writer.writerow([
+                "customer_id",
+                "customer_title",
+                "customer_first_name",
+                "customer_last_name",
+                "customer_dob",
+                "customer_address",
+                "customer_nationality",
+                "customer_email",
+                "customer_phone",
+            ])
 
     with open("customerdata.csv", "a") as results_file:
         writer = csv.writer(results_file)
-        writer.writerow(
-            [
-                customer_id,
-                customer_title,
-                customer_first_name,
-                customer_last_name,
-                customer_dob,
-                customer_address,
-                customer_nationality,
-                customer_email,
-                customer_phone,
-            ]
-        )
+        writer.writerow([
+            customer_id,
+            customer_title,
+            customer_first_name,
+            customer_last_name,
+            customer_dob,
+            customer_address,
+            customer_nationality,
+            customer_email,
+            customer_phone,
+        ])
 
     return customer_id
 
 
-def my_transactions():
-    actual_balance = 3
-    session_date = datetime.date.today()
-    session_time = datetime.datetime.now().strftime("%H:%M")
-    # security_login = input(
-    #     "For security reasons, please enter your customer ID to access this section\n If you dont have an ID you will need to register first as a customer\n Enter ID: "
-    # )
 
-    # if security_login != customer_id:
-    #     print("Wrong number - Access denied")
-    #     return welcome_page()
+
+
+def my_transactions(actual_balance=0):
+    session_date = datetime.date.today()
+    session_time = datetime.datetime.now().strftime("%H:%M:%S")
 
     print(
-        "What Type of operations you would like to make \n Press the corresponding Number:\n 1.Deposit\n 2.Withdrawal\n 3.History\n 4.Menu"
+        "What type of operation would you like to make?\nPress the corresponding number:\n1. Deposit\n2. Withdrawal\n3. History\n4. Menu"
     )
-    user_choice = input("Enter a number: ")
 
-    if user_choice == "1":
-        user_deposit_amount = input("Enter a sum (min 1 EUR): ")
-        if user_deposit_amount < "1":
-            print("You need to deposit a minimum of 1EUR")
-            return user_deposit_amount
-        else:
-            actual_balance += int(user_deposit_amount)
+    writer = None
 
-    elif user_choice == "2":
-        print(f"Your current account balance is {actual_balance}")
-        user_withdrawal_amount = input("Enter a sum: ")
-        if user_withdrawal_amount < actual_balance:
-            print("Withdrawal successful")
-            actual_balance -= int(user_withdrawal_amount)
+    while True:
+        user_choice = input("Enter a number: ")
+
+        if user_choice == "1":
+            while True:
+                try:
+                    user_deposit_amount = input("Enter a sum (minimum 1 EUR): ")
+                    deposit_amount = float(user_deposit_amount)
+                    if deposit_amount < 1:
+                        print("You need to deposit a minimum of 1 EUR.")
+                    else:
+                        actual_balance += deposit_amount
+                        print(
+                            f"You now hold: {actual_balance} EUR\n\nBack to the main section..."
+                        )
+                        # Write the transaction to the history.csv file
+                        with open("history.csv", "a") as results_file:
+                            writer = csv.writer(results_file)
+                            writer.writerow(["Transaction Type", "Amount", "Date", "Time"])
+                            writer.writerow(
+                                ["deposit", deposit_amount, session_date, session_time]
+                            )
+                            results_file.write("\n")
+                        return my_transactions(actual_balance)
+                except ValueError:
+                    print("Invalid input. You must enter a valid number.")
+
+        elif user_choice == "2":
             print(f"Your current account balance is {actual_balance}")
-        else:
-            print("Insufficient funds")
+            while True:
+                try:
+                    user_withdrawal_amount = input("Enter a sum: ")
+                    withdrawal_amount = float(user_withdrawal_amount)
+                    if withdrawal_amount <= actual_balance:
+                        print("Withdrawal successful")
+                        actual_balance -= withdrawal_amount
+                        print(f"Your current account balance is {actual_balance} EUR")
+                        with open("history.csv", "a") as results_file:
+                            writer = csv.writer(results_file)
+                            writer.writerow(["Transaction Type", "Amount", "Date", "Time"])
+                            writer.writerow(
+                                [
+                                    "withdrawal",
+                                    withdrawal_amount,
+                                    session_date,
+                                    session_time,
+                                ]
+                            )
+                            results_file.write("\n")
+                        return my_transactions(actual_balance)
+                    else:
+                        print("Insufficient funds")
+                except ValueError:
+                    print("Invalid input. You must enter a valid number.")
 
-        if not os.path.isfile("history.csv"):
-            with open("history.csv", "w") as file:
-                writer = csv.writer(file)
-                writer.writerow(
-                    [
-                        "deposit",
-                        "withdrawal",
-                        "date",
-                        "time",
-                    ]
+        elif user_choice == "3":
+            if not os.path.isfile("history.csv"):
+                print("No transaction history found.")
+            else:
+                print(
+                    "You can find all of your history transactions in the History.csv file"
                 )
 
-        with open("customerdata.csv", "a") as results_file:
-            writer = csv.writer(results_file)
-            writer.writerow(
-                [
-                    user_deposit_amount,
-                    user_withdrawal_amount,
-                    session_date,
-                    session_time,
-                ]
-            )
+        elif user_choice == "4":
+            print("Exiting operations section...")
+            break
 
-    elif user_choice == "3":
-        print("Please find your transactions in the history.csv file")
+        else:
+            print("Invalid choice, select the appropriate number.")
 
-    elif user_choice == "4":
-        print("Exiting operations section...")
-        return welcome_page()
+    return actual_balance
 
-    else:
-        print("Invalid choice, select the adequate number")
+
+
+
+
 
 
 def my_loans():
@@ -524,7 +517,7 @@ def my_data():
 
     
  
-main()
+intro()
 welcome_page()
 if __name__ == "__main__":
-    main()
+    intro()

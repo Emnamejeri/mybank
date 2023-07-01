@@ -1,24 +1,51 @@
 # mybank
- The Banking App My Bank is a Python-based application designed to help users efficiently manage their daily finances. This application offers a range of features that empower users to take control of their banking needs. Whether it's checking transaction history, applying for loans, customizing a card, or conducting currency exchange operations, the Banking App provides a comprehensive solution.
+MyBank
+Welcome to MyBank, an application that empowers your financial freedom and helps you manage your daily finances. With MyBank, you can track your expenses, apply for loans, and gain valuable insights into international exchange rates.
 
-Key Features
-1. My Profile
-The "My Profile" section of the app allows users to view and manage their personal information. Users can access their account details, including their name, contact information, and account preferences. This section serves as a central hub for users to update their profile and stay informed about their banking information.
+Prerequisites
+Before running the code, make sure you have the following dependencies installed:
 
-2. My History
-The "My History" section offers users a detailed view of their transaction history. Users can explore and search for specific transactions, including deposits and withdrawals. This feature provides users with a comprehensive overview of their financial activities, enabling them to monitor and analyze their spending patterns effectively.
+random
+csv
+os
+datetime
+re
+sys
+smtplib
+email.mime.multipart
+email.mime.text
+validate_email
+requests
+You can install the dependencies using pip:
 
-3. My Loans
-The "My Loans" section provides users with valuable information about various loan options available through the app. Users can explore different types of loans, such as personal loans, mortgages, or car loans, along with their corresponding terms and conditions. Additionally, this section guides users on the application process, helping them make informed decisions about their financial needs.
+bash
+Copy code
+pip install validate_email requests
+Usage
+To use the MyBank application, follow these steps:
 
-4. My Card
-In the "My Card" section, users can personalize and order a customized card tailored to their preferences. This feature allows users to choose the design, color, and personalized information to be displayed on their card. By offering customization options, users can create a card that reflects their unique style and preferences while enjoying the convenience of digital banking.
+Run the code in a Python environment.
+You will be greeted with the welcome message and the main menu options.
+Choose the corresponding number for the desired action.
+Follow the prompts and enter the required information.
+The application will perform the requested action, such as creating a profile, managing transactions, applying for loans, or checking exchange rates.
+Functionality
+The code provides the following functionality:
 
-5. My Fx
-The "My Fx" section enables users to perform currency exchange operations seamlessly. Users can access real-time currency rates and convert funds between different currencies. This feature is particularly useful for users who frequently travel or engage in international transactions, providing them with a convenient and efficient way to manage their foreign exchange needs.
+intro()
+Displays the welcome message and introduces the MyBank application.
 
+welcome_page()
+Displays the main menu options and allows the user to choose an action.
 
-6. Support and contact Information
-For any inquiries or support related to the Banking App, users can contact our helpdesk. 
+my_profile()
+Prompts the user to enter their personal information to create a profile. The information includes the customer's title, first name, last name, nationality, date of birth, email, phone number, and country of residence. The entered information is saved in a CSV file called customerdata.csv.
 
+my_transactions(actual_balance)
+Allows the user to perform various banking operations, such as depositing and withdrawing money, viewing transaction history, and returning to the main menu. The user's account balance is maintained throughout the session.
 
+my_loans()
+Provides information about available loans and allows the user to check their eligibility for a home loan or a car loan. The user needs to enter their monthly income, monthly expenses, and loan duration. Based on this information, the maximum loan amount, total repayment amount, and monthly payment are calculated and displayed.
+
+my_fx_account()
+Allows the user to consult the latest Forex rates for fiat and crypto currencies. The user can choose to view rates for crypto or fiat currencies. For crypto currencies, the code makes an API request to retrieve the rates for 1 Bitcoin (BTC) as the base currency. The rates are then displayed for USD, EUR, CHF, and CNY.
