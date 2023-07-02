@@ -9,6 +9,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from validate_email_address import validate_email
 import requests
+
 def intro():
     print(
         "Welcome to MyBank\n\nYour App for Empowering you Financial Freedom\nYour Money, Your Way!!!\nThe ultimate financial application that revolutionizes how you manage your daily finances. \nTake control of your money like never before with our intuitive and user-friendly interface. \nTrack your expenses, apply for loans, and gain valuable insights into international exchange rates."
@@ -17,7 +18,7 @@ def intro():
 
 def welcome_page():
     print(
-        "Press the corresponding Number to start:\n 1.My Profile\n 2.My Operations\n 3.My Loans\n 4.My Card\n 5.My Fx account\n 6.Help\n 7.Data"
+        "Press the corresponding Number to start:\n 1.My Profile\n 2.My Operations\n 3.My Loans\n 4.My Card\n 5.My Fx account\n 6.Help\n 7.Data\n You can always write Exit"
     )
     user_choice = int(input("Enter choice: "))
     
@@ -38,9 +39,12 @@ def welcome_page():
     elif user_choice > 7 or user_choice <= 0:
         print("Invalid choice, try again")
         return user_choice
+    elif user_choice == "exit":
+        print("Sad to see you go")
+        sys.exit()
 
 def my_profile():
-    print("Please enter your data to create a profile with us")
+    print("Please enter your data to create a profile with us\n\n You can always write stop to end the process")
     customer_id = random.randint(100000, 999999)
 
     while True:
@@ -102,7 +106,7 @@ def my_profile():
 
     while True:
         customer_email = input("E-mail: ")
-        email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,3}$"
 
         if re.match(email_regex, customer_email):
             break
@@ -137,7 +141,7 @@ def my_profile():
 
     while True:
         try:
-            customer_agreement = input("Do you agree to processing your data by MyBank as per international financial regulations (yes/no): ").lower()
+            customer_agreement = input("Please refer to our terms and conditions in the terms.txt file and confirm\n if you agree to processing your data by MyBank as per international financial regulations (yes/no): ").lower()
 
             if customer_agreement == "yes" or customer_agreement == "y":
                 print("Welcome to My Bank", customer_title, customer_last_name, "\nYour user ID is", customer_id, "\nSaving your details...\nDiscover our wide range of banking services")
@@ -148,7 +152,7 @@ def my_profile():
 
                 if exit_choice == "yes" or exit_choice == "y":
                     print("Welcome to My Bank", customer_title, customer_last_name, "\nYour user ID is", customer_id, "\nSaving your details...\nDiscover our wide range of banking services")
-                    break
+                    return welcome_page()
                 elif exit_choice == "exit":
                     print("Sad to see you go", customer_title, customer_last_name)
                     sys.exit()
@@ -278,10 +282,6 @@ def my_transactions(actual_balance=0):
 
 
 
-
-
-
-
 def my_loans():
     print(
         "Our Selection of available loans is displayed below \n Press the corresponding Number to verify your eligibility:\n 1.Home Loan\n 2.Car Loan \n 3.Menu"
@@ -369,7 +369,7 @@ def my_loans():
 def my_fx_account():
     try:
         fx_user_choice = int(input(
-            "Consult the latest Forex rates for Fiat and Crypto currencies \n Press the corresponding Number:\n 1.Cypto\n 2.Fiat\n 3.Menu 4.NFT(coming soon) 4.Indexes(coming soon)\n"
+            "Consult the latest Forex rates for Fiat and Crypto currencies \n Press the corresponding Number:\n 1.Cypto\n 2.Fiat\n 3.NFT(coming soon) \n 4.Indexes(coming soon)\n 5.Menu"
         ))
 
         if fx_user_choice == 1:
@@ -399,7 +399,7 @@ def my_fx_account():
         elif fx_user_choice == 2:
             api_key = "fa9f8e4cc8c9faf86d3e0d1c"
             base_currency = "USD"
-            target_currencies = ["CHF", "EUR", "EGP", "TND"]
+            target_currencies = ["CHF", "EUR", "EGP", "TND", "CNY", "GBP", "JPY"]
 
             url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/{base_currency}"
 
@@ -413,14 +413,22 @@ def my_fx_account():
                     if currency in rates:
                         rate = rates[currency]
                         print(f"1 {base_currency} = {rate} {currency}")
-                        return my_fx_account()
+                        
                     else:
                         print(f"Currency {currency} not found in the API response.")
             else:
                 print("Apologies - An error occurred while making the API request.")
-
-        elif fx_user_choice >= 3:
+            return my_fx_account()
+        elif fx_user_choice == 3:
+            print("Sorry this section is still under review - Coming soon")
+            return my_fx_account()
+        elif fx_user_choice == 4:
+            print("Sorry this section is still under review - Coming soon")
+            return welcome_page()
+        
+        elif fx_user_choice >= 5:
             print("Exiting forex trading section...\nBack to the main page......")
+            return welcome_page()
 
     except ValueError:
         print("Invalid input. Please enter valid integer values (1|2|3).")
@@ -480,8 +488,10 @@ def help_section():
             send_email(user_email, confirmation_message)
             
             print("Question submitted successfully. A confirmation email has been sent to your email address.")
+            return welcome_page()
         else:
             print("Invalid email address. Please try again.")
+            return help_section()
     elif support_request == "no" or support_request == "n":
         print("We are glad everything is clear dear customer \n\nBack to the main menu section.....")
         return welcome_page()
