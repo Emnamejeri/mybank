@@ -277,15 +277,15 @@ def my_transactions(actual_balance=0):
                 print(
                     "You can find all of your history transactions in the History.csv file"
                 )
-
+            return my_transactions()
         elif user_choice == "4":
             print("Exiting operations section...")
-            break
+            return welcome_page()
 
         else:
             print("Invalid choice, select the appropriate number.")
 
-    return actual_balance
+        return actual_balance
 
 
 def my_loans():
@@ -377,12 +377,12 @@ def my_fx_account():
     try:
         fx_user_choice = int(
             input(
-                "Consult the latest Forex rates for Fiat and Crypto currencies \n Press the corresponding Number:\n 1.Cypto\n 2.Fiat\n 3.NFT(coming soon) \n 4.Indexes(coming soon)\n 5.Menu"
+                "Consult the latest Forex rates for Fiat and Crypto currencies \n Press the corresponding Number:\n 1.Cypto\n 2.Fiat\n 3.Menu\n"
             )
         )
 
         if fx_user_choice == 1:
-            print("List of exchange rates for 1 Bitcoin BTC currency as a base: ")
+            print("List of exchange rates for 1 Bitcoin BTC as a base currency: ")
             try:
                 url = "https://api.coingecko.com/api/v3/exchange_rates"
 
@@ -406,6 +406,7 @@ def my_fx_account():
                 print("Invalid input. Please enter valid integer values (1|2|3).")
 
         elif fx_user_choice == 2:
+            print("List of exchange rates for 1 USD as base currency: ")
             api_key = "fa9f8e4cc8c9faf86d3e0d1c"
             base_currency = "USD"
             target_currencies = ["CHF", "EUR", "EGP", "TND", "CNY", "GBP", "JPY"]
@@ -422,26 +423,20 @@ def my_fx_account():
                     if currency in rates:
                         rate = rates[currency]
                         print(f"1 {base_currency} = {rate} {currency}")
-
                     else:
                         print(f"Currency {currency} not found in the API response.")
             else:
                 print("Apologies - An error occurred while making the API request.")
             return my_fx_account()
-        elif fx_user_choice == 3:
-            print("Sorry this section is still under review - Coming soon")
-            return my_fx_account()
-        elif fx_user_choice == 4:
-            print("Sorry this section is still under review - Coming soon")
-            return welcome_page()
 
-        elif fx_user_choice >= 5:
+        elif fx_user_choice >= 3:
             print("Exiting forex trading section...\nBack to the main page......")
-            return welcome_page()
+        return welcome_page()
 
     except ValueError:
-        print("Invalid input. Please enter valid integer values (1|2|3).")
+        print("Invalid input. Please enter valid integer values (1|2|3|4).")
         return my_fx_account()
+
 
 
 def my_card():
