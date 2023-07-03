@@ -17,12 +17,13 @@ def intro():
     )
     return welcome_page()
 
+
 def welcome_page():
     print(
         "Press the corresponding Number to start:\n 1.My Profile\n 2.My Operations\n 3.My Loans\n 4.My Card\n 5.My Fx account\n 6.Help\n 7.Data"
     )
     user_choice = int(input("Enter choice: "))
-
+    # user must select a digit that is associated with a function
     if user_choice == 1:
         return my_profile()
     elif user_choice == 2:
@@ -42,8 +43,11 @@ def welcome_page():
         return user_choice
 
 
+# function in charge of collecting user data
 def my_profile():
-    print("Please enter your data to create a profile with us\n\n You can always write stop to end the process")
+    print(
+        "Please enter your data to create a profile with us\n\n You can always write stop to end the process"
+    )
     customer_id = random.randint(100000, 999999)
 
     while True:
@@ -66,7 +70,9 @@ def my_profile():
             print("Exiting registration process...")
             return welcome_page()
         else:
-            print("Invalid name. Please try again without any digits or special characters.")
+            print(
+                "Invalid name. Please try again without any digits or special characters."
+            )
             continue
 
     while True:
@@ -77,18 +83,23 @@ def my_profile():
             print("Exiting registration process...")
             return welcome_page()
         else:
-            print("Invalid name. Please try again without any digits or special characters.")
+            print(
+                "Invalid name. Please try again without any digits or special characters."
+            )
             continue
 
     while True:
         customer_nationality = input("Nationality(ies): ").lower()
         if re.match("^[a-z]+(?:\s[a-z]+)*$", customer_nationality):
             break
+
         elif customer_nationality == "stop":
             print("Exiting registration process...")
             return welcome_page()
         else:
-            print("Invalid input. Please try again without any digits or special characters.")
+            print(
+                "Invalid input. Please try again without any digits or special characters."
+            )
             continue
 
     while True:
@@ -135,24 +146,69 @@ def my_profile():
             print("Exiting registration process...")
             return welcome_page()
         else:
-            print("Invalid Country name. Please try again without any special characters.")
+            print(
+                "Invalid Country name. Please try again without any special characters."
+            )
             continue
 
     while True:
         try:
-            customer_agreement = input("Please refer to our terms and conditions in the terms.txt file\n Confirm if you agree to processing your data by MyBank as per international financial regulations (yes/no): ").lower()
+            customer_agreement = input(
+                "Please refer to our terms and conditions in the terms.txt file\n Confirm if you agree to processing your data by MyBank as per international financial regulations (yes/no): "
+            ).lower()
 
             if customer_agreement == "yes" or customer_agreement == "y":
-                print("Welcome to My Bank", customer_title, customer_last_name, "\nYour user ID is", customer_id, "\nSaving your details...\nDiscover our wide range of banking services")
-                create_customer_data_csv(customer_id, customer_title, customer_first_name, customer_last_name, customer_dob, customer_address, customer_nationality, customer_email, customer_phone)
+                print(
+                    "Welcome to My Bank",
+                    customer_title,
+                    customer_last_name,
+                    "\nYour user ID is",
+                    customer_id,
+                    "\nSaving your details...\nDiscover our wide range of banking services",
+                )
+                create_customer_data_csv(
+                    customer_id,
+                    customer_title,
+                    customer_first_name,
+                    customer_last_name,
+                    customer_dob,
+                    customer_address,
+                    customer_nationality,
+                    customer_email,
+                    customer_phone,
+                )
                 return welcome_page()
             elif customer_agreement == "no" or customer_agreement == "n":
-                print("Unfortunately", customer_title, customer_last_name, "we cannot offer you our services without your consent to processing your data.")
-                exit_choice = input("Please type 'exit' to abandon the process or 'yes' to agree to our Terms and Conditions: ").lower()
+                print(
+                    "Unfortunately",
+                    customer_title,
+                    customer_last_name,
+                    "we cannot offer you our services without your consent to processing your data.",
+                )
+                exit_choice = input(
+                    "Please type 'exit' to abandon the process or 'yes' to agree to our Terms and Conditions: "
+                ).lower()
 
                 if exit_choice == "yes" or exit_choice == "y":
-                    print("Welcome to My Bank", customer_title, customer_last_name, "\nYour user ID is", customer_id, "\nSaving your details...\nDiscover our wide range of banking services")
-                    create_customer_data_csv(customer_id, customer_title, customer_first_name, customer_last_name, customer_dob, customer_address, customer_nationality, customer_email, customer_phone)
+                    print(
+                        "Welcome to My Bank",
+                        customer_title,
+                        customer_last_name,
+                        "\nYour user ID is",
+                        customer_id,
+                        "\nSaving your details...\nDiscover our wide range of banking services",
+                    )
+                    create_customer_data_csv(
+                        customer_id,
+                        customer_title,
+                        customer_first_name,
+                        customer_last_name,
+                        customer_dob,
+                        customer_address,
+                        customer_nationality,
+                        customer_email,
+                        customer_phone,
+                    )
                     return welcome_page()
                 elif exit_choice == "exit":
                     print("Sad to see you go", customer_title, customer_last_name)
@@ -165,42 +221,55 @@ def my_profile():
             print("Invalid input. Please enter text.")
 
 
-def create_customer_data_csv(customer_id, customer_title, customer_first_name, customer_last_name, customer_dob, customer_address, customer_nationality, customer_email, customer_phone):
+# function to save user data to csv file and display it later in the my-data file
+def create_customer_data_csv(
+    customer_id,
+    customer_title,
+    customer_first_name,
+    customer_last_name,
+    customer_dob,
+    customer_address,
+    customer_nationality,
+    customer_email,
+    customer_phone,
+):
     if not os.path.isfile("customerdata.csv"):
         with open("customerdata.csv", "w") as file:
             writer = csv.writer(file)
-            writer.writerow([
-                "customer_id",
-                "customer_title",
-                "customer_first_name",
-                "customer_last_name",
-                "customer_dob",
-                "customer_address",
-                "customer_nationality",
-                "customer_email",
-                "customer_phone",
-            ])
+            writer.writerow(
+                [
+                    "customer_id",
+                    "customer_title",
+                    "customer_first_name",
+                    "customer_last_name",
+                    "customer_dob",
+                    "customer_address",
+                    "customer_nationality",
+                    "customer_email",
+                    "customer_phone",
+                ]
+            )
 
     with open("customerdata.csv", "a") as results_file:
         writer = csv.writer(results_file)
-        writer.writerow([
-            customer_id,
-            customer_title,
-            customer_first_name,
-            customer_last_name,
-            customer_dob,
-            customer_address,
-            customer_nationality,
-            customer_email,
-            customer_phone,
-        ])
+        writer.writerow(
+            [
+                customer_id,
+                customer_title,
+                customer_first_name,
+                customer_last_name,
+                customer_dob,
+                customer_address,
+                customer_nationality,
+                customer_email,
+                customer_phone,
+            ]
+        )
 
     return customer_id
 
 
-
-        
-
+# function for making basic deposit withdrawal operations
 def my_transactions(actual_balance=0):
     session_date = datetime.date.today()
     session_time = datetime.datetime.now().strftime("%H:%M:%S")
@@ -230,9 +299,6 @@ def my_transactions(actual_balance=0):
                         with open("history.csv", "a") as results_file:
                             writer = csv.writer(results_file)
                             writer.writerow(
-                                ["Transaction Type", "Amount", "Date", "Time"]
-                            )
-                            writer.writerow(
                                 ["deposit", deposit_amount, session_date, session_time]
                             )
                             results_file.write("\n")
@@ -252,9 +318,6 @@ def my_transactions(actual_balance=0):
                         print(f"Your current account balance is {actual_balance} EUR")
                         with open("history.csv", "a") as results_file:
                             writer = csv.writer(results_file)
-                            writer.writerow(
-                                ["Transaction Type", "Amount", "Date", "Time"]
-                            )
                             writer.writerow(
                                 [
                                     "withdrawal",
@@ -380,7 +443,7 @@ def my_fx_account():
                 "Consult the latest Forex rates for Fiat and Crypto currencies \n Press the corresponding Number:\n 1.Cypto\n 2.Fiat\n 3.Menu\n"
             )
         )
-
+        # data extracted from coingecko to display prices for BTC
         if fx_user_choice == 1:
             print("List of exchange rates for 1 Bitcoin BTC as a base currency: ")
             try:
@@ -404,7 +467,7 @@ def my_fx_account():
                 print("Apologies - An error occurred while making the API request:", e)
             except ValueError:
                 print("Invalid input. Please enter valid integer values (1|2|3).")
-
+        # data extracted from exchangerate API to display prices for most traded currencies
         elif fx_user_choice == 2:
             print("List of exchange rates for 1 USD as base currency: ")
             api_key = "fa9f8e4cc8c9faf86d3e0d1c"
@@ -438,14 +501,13 @@ def my_fx_account():
         return my_fx_account()
 
 
-
 def my_card():
     delivery_address = input(
-        "To order our card please enter a delivery address \nThe address must be composed of: \nThe house number(digits) \nThe street name(string) \nThe Zip/Postal code \nThe city name \nThe Country: \n\n"
+        "To order our card please enter a delivery address \nThe address must be composed of: \nThe house number\nThe street name\nThe Zip/Postal code\nThe city name\nThe Country:\n\n"
     )
 
     match = re.match(
-        r"^(\d{1,3})\s+(?:[A-Za-z]+\s?){1,3}\s+(\d{3,6})\s+((?:[A-Za-z]+\s?)+)\s+([A-Za-z]+)$",
+        r"^(\d{1,3})\s+(?:[A-Za-z]+\s?){1,3}\s+(\d{3,6})\s+((?:[A-Za-z]+\s?)+)\s+([A-Za-z]+)$",  # regex to validate the address
         delivery_address,
     )
     if match:
@@ -467,6 +529,7 @@ def verify_email(email):
     return validate_email(email)
 
 
+# function to send email to user to confirm receiving their request
 def send_email(email_address, message):
     msg = MIMEMultipart()
     msg["From"] = "emnaemna092@gmail.com"
@@ -480,7 +543,6 @@ def send_email(email_address, message):
         server.login("emnaemna092@gmail.com", "fsiecgjohczzwevm")
         server.send_message(msg)
         server.quit()
-        
 
     except smtplib.SMTPException as e:
         print("An error occurred while sending the confirmation email:", str(e))
@@ -499,8 +561,11 @@ def help_section():
         user_email = input("Please enter your email address: ").lower()
 
         if verify_email(user_email):
-            send_email("emnaemna092@gmail.com", f"User Request: {user_request} \n\nUser Email: {user_email}")
-            confirmation_message = "Thank you for contacting us, \n\nyour Email was well received. \n\nWe will get back to you promptly with an answer. \nThanks for using our services."
+            send_email(
+                "emnaemna092@gmail.com",
+                f"User Request: {user_request} \n\nUser Email: {user_email}",  # email to be sent to bank support team
+            )
+            confirmation_message = "Thank you for contacting us,\n\nyour Email was well receivedand we will get back to you promptly with an answer.\nThank you for using our services.\n Mybank Team"
             send_email(user_email, confirmation_message)
 
             print(
@@ -512,11 +577,12 @@ def help_section():
             return help_section()
     elif support_request == "no" or support_request == "n":
         print(
-            "We are glad everything is clear dear customer \n\nBack to the main menu section....."
+            "We are glad everything is clear dear customer \n\nBack to the menu section....."
         )
         return welcome_page()
 
 
+# function to print data on our records to show the customer what we have on records
 def my_data():
     print("Below are your saved details on records")
 
